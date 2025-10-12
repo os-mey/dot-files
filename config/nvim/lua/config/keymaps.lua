@@ -9,9 +9,9 @@ local state = {
         cursorline = false,
         number = false,
         relativenumber = false,
-        visual_bg = "",
-        cursor_bg = "",
-    }
+        visual_bg = '',
+        cursor_bg = '',
+    },
 }
 
 local function create_floating_window(opts)
@@ -61,12 +61,12 @@ local function toggle_terminal()
 end
 
 -- Preview mode
-local ffi = require("ffi")
+local ffi = require 'ffi'
 
-ffi.cdef([[
+ffi.cdef [[
 void ui_busy_start(void);
 void ui_busy_stop(void);
-]])
+]]
 
 local function toggle_preview_mode()
     if not state.preview.enabled then
@@ -79,8 +79,8 @@ local function toggle_preview_mode()
         vim.wo.number = false
         vim.wo.relativenumber = false
 
-        state.preview.visual_bg = vim.api.nvim_get_hl(0, { name = "Visual" }).bg
-        vim.api.nvim_set_hl(0, "Visual", { fg = "NONE" })
+        state.preview.visual_bg = vim.api.nvim_get_hl(0, { name = 'Visual' }).bg
+        vim.api.nvim_set_hl(0, 'Visual', { fg = 'NONE' })
 
         Snacks.indent.disable()
     else
@@ -90,7 +90,7 @@ local function toggle_preview_mode()
         vim.wo.number = state.preview.number
         vim.wo.relativenumber = state.preview.relativenumber
 
-        vim.api.nvim_set_hl(0, "Visual", { bg = state.preview.visual_bg })
+        vim.api.nvim_set_hl(0, 'Visual', { bg = state.preview.visual_bg })
 
         Snacks.indent.enable()
     end
@@ -133,7 +133,7 @@ end
 keymap('t', '<Esc>', '<C-\\><C-n>', 'Terminal normal mode')
 
 -- Remove search highlight with escape
-keymap('n', '<Esc>', '<CMD>nohlsearch<CR>', 'Clear search highlight')
+keymap('n', '<Esc>', ':nohlsearch<CR>', 'Clear search highlight')
 
 -- Toggles
 keymap('n', '<leader>tt', toggle_terminal, 'Toggle terminal')
@@ -154,11 +154,17 @@ keymap('n', '<C-u>', '<C-u>zz', 'Scroll up')
 -- keymap('n', 'j', 'gj', 'Down')
 -- keymap('n', 'k', 'gk', 'Up')
 
--- Shortcuts for switching between windows
+-- Switching windows
 keymap('n', '<C-h>', '<C-w><C-h>', 'Move focus to the left window')
 keymap('n', '<C-j>', '<C-w><C-j>', 'Move focus to the lower window')
 keymap('n', '<C-k>', '<C-w><C-k>', 'Move focus to the upper window')
 keymap('n', '<C-l>', '<C-w><C-l>', 'Move focus to the right window')
+
+-- Resizing windows (collides with something)
+-- keymap('n', '<C-S-h>', ':resize +8<CR>', 'Increase window width')
+-- keymap('n', '<C-S-j>', ':resize -8<CR>', 'Decrease window width')
+-- keymap('n', '<C-S-k>', ':vertical resize -5<CR>', 'Increase window height')
+-- keymap('n', '<C-S-l>', ':vertical resize +5<CR>', 'Decrease window height')
 
 -- Centered searching
 keymap('n', 'N', 'Nzzzv', 'Search previous occurence')
@@ -186,6 +192,12 @@ keymap('n', 'J', 'mzJ`z', 'Join lines')
 -- Move selected lines
 keymap('v', 'J', ":m '>+1<CR>gv=gv", 'Shift selection down')
 keymap('v', 'K', ":m '<-2<CR>gv=gv", 'Shift selection up')
+
+-- Write file
+keymap('n', '<leader>w', ':update<CR>', 'Write file')
+
+-- Start norm command
+keymap({ 'n', 'v' }, '<leader>n', ':norm ', 'Start norm command')
 
 -- Paste and keep register
 keymap('x', '<leader>p', '"_dP', 'Paste and keep register')
