@@ -20,6 +20,7 @@
       rust-analyzer
       typescript-language-server
       vscode-langservers-extracted
+      jdt-language-server
 
       # Linters
       python312Packages.flake8

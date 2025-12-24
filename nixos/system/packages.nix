@@ -33,6 +33,7 @@
 
   environment.systemPackages = with pkgs; [
     # Tools
+    bash-completion
     bc
     file
     intel-gpu-tools
@@ -43,6 +44,8 @@
     tree
     vdpauinfo
     vim
+    tree-sitter
+    graalvmPackages.graalvm-ce
 
     # Git
     git

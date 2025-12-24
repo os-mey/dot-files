@@ -187,9 +187,9 @@
       "wheel" # Enable ‘sudo’ for the user.
       "video" # Enable intel-gpu-tools without root
       "docker"
-      "adbusers" # Android debug bridge
       "kvm"
       "waydroid"
+      "adbusers" # Android debug bridge
     ];
   };
 

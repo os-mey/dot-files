@@ -8,7 +8,7 @@
     # Firefox
     firefox = {
       enable = true;
-      package = pkgs.firefox-wayland;
+      package = pkgs.firefox;
       policies = {
         AppAutoUpdate = false;
         AutofillAddressEnabled = false;
@@ -74,7 +74,7 @@
       pinentryPackage = pkgs.pinentry-curses; # Non-GUI-prompt
       settings = {
         # Passphrase stays cached for 20 minutes after use up to 4 hours.
-        default-cache-ttl = 1200;
+        default-cache-ttl = 3600;
         max-cache-ttl = 7200;
       };
     };

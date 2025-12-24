@@ -7,26 +7,25 @@
     libreoffice-qt
     spotify
     ungoogled-chromium
+    prismlauncher
 
     # discord
     # inkscape
-    # prismlauncher
     # logisim
     # logisim-evolution
     # mars-mips
-    # graalvm-ce
 
     # Yubikey
     yubikey-manager
+    yubioath-flutter
     yubikey-personalization
-    yubikey-personalization-gui
     pinentry-curses
 
     # Tools
-    bash-completion
     bat
     btop
-    du-dust
+    cmake
+    dust
     dua
     eza
     fd
@@ -50,7 +49,7 @@
     man-pages-posix
 
     # Pdf tools
-    poppler_utils
+    poppler-utils
     texlab
     texliveFull
     zathura

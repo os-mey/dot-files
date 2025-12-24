@@ -14,9 +14,6 @@
     # Enalbe fstrim.
     fstrim.enable = true;
 
-    # Preload to improve browser startup time.
-    preload.enable = true;
-
     # Enable the blueman interface.
     blueman.enable = true;
 
@@ -89,13 +86,13 @@
     pcscd.enable = true;
 
     # Login options
-    logind = {
-      killUserProcesses = true;
-      lidSwitch = "suspend";
-      lidSwitchDocked = "ignore";
-      lidSwitchExternalPower = "suspend";
-      powerKey = "ignore";
-      powerKeyLongPress = "poweroff";
+    logind.settings.Login = {
+      KillUserProcesses = true;
+      LidSwitch = "suspend";
+      LidSwitchDocked = "ignore";
+      LidSwitchExternalPower = "suspend";
+      PowerKey = "ignore";
+      PowerKeyLongPress = "poweroff";
     };
   };
 

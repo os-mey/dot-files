@@ -39,7 +39,7 @@
 
   hardware = {
     graphics.extraPackages = with pkgs; [
-      vaapiVdpau
+      libva-vdpau-driver
       libvdpau-va-gl
 
       # For intel GPUs older than 2014: intel-vaapi-driver and intel-ocl
@@ -52,7 +52,7 @@
       # See this table for GPU support:
       # https://github.com/intel/libvpl?tab=readme-ov-file#dispatcher-behavior-when-targeting-intel-gpus
       # vpl-gpu-rt            # for newer GPUs
-      intel-media-sdk # for older GPUs
+      # intel-media-sdk       # for older GPUs <- should be chosen, but contains vulnerabilites
     ];
 
     # Improve bluetooth stability
