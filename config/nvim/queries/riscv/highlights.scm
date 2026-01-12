@@ -1,17 +1,20 @@
 ;; Directives
 [
   (macro_mnemonic)
-  (integer_mnemonic)
-  (float_mnemonic)
+  (numeric_mnemonic)
   (string_mnemonic)
   (control_mnemonic)
 ] @keyword
 
-(section_type) @type
-(option_flag) @character.special
+[
+  (elf_type_tag)
+  (option_flag)
+  (macro_parameter_qualifier)
+] @type
 
 ;; Labels & symbols
 [
+  (macro_label)
   (global_label)
   (local_label)
   (local_label_reference)
@@ -30,7 +33,8 @@
 (macro_name) @label
 [
   (macro_variable)
-  (macro_parameter)
+  (string_macro_variable)
+  (macro_parameter_name)
 ] @parameter
 
 ;; Primitives
@@ -49,12 +53,11 @@
 (ERROR (_) @error)
 
 [
-  (line_comment)
-  (block_comment)
-  (preprocessor)
+  (comment)
 ] @comment
 
 [
+  "="
   ","
   ";"
 ] @punctuation.delimiter
@@ -65,26 +68,18 @@
 ] @punctuation.bracket
 
 [
-  "|"
-  "||"
-  "&"
-  "&&"
-  "^"
-  "<"
-  "<<"
-  ">"
-  ">>"
-  "+"
-  "-"
-  "*"
-  "~"
-  "!"
-  "=="
-  "!="
-  "<="
-  ">="
-  "%"
-  "="
-  (modulo_operator)
-  (division_operator)
+  (bitwise_or_operator)
+  (logical_or_operator)
+  (bitwise_and_operator)
+  (logical_and_operator)
+  (bitwise_xor_operator)
+  (relational_operator)
+  (shift_operator)
+  (additive_operator)
+  (multiplicative_operator)
+  (equality_operator)
+  (assignment_operator)
+  (unary_minus_operator)
+  (bitwise_not_operator)
+  (logical_not_operator)
 ] @operator
