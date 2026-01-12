@@ -45,6 +45,7 @@ return {
                 jsonc = { 'jq' },
                 lua = { 'stylua' },
                 nix = { 'alejandra' },
+                php = { 'php_cs_fixer' },
                 python = { 'black' },
                 rust = { 'rustfmt' },
                 sh = { 'shfmt' },
