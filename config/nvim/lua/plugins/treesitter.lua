@@ -17,7 +17,7 @@ return {
         branch = 'master',
         build = ':TSUpdate',
         opts = {
-            ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'rust', 'python', 'mips' },
+            ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc', 'rust', 'python', 'riscv' },
             ignore_install = { 'latex' },
             auto_install = true,
             highlight = {
@@ -52,24 +52,51 @@ return {
             vim.keymap.set('n', 'z9', ':set foldlevel=8<cr>')
 
             -- Enable highlighting
-            vim.api.nvim_create_autocmd('BufReadPost', {
-                callback = function()
-                    pcall(vim.treesitter.start)
-                end,
-            })
+            local readCallback = function()
+                pcall(vim.treesitter.start)
+            end
+            vim.api.nvim_create_autocmd('BufNewFile', { callback = readCallback })
+            vim.api.nvim_create_autocmd('BufReadPost', { callback = readCallback })
 
             -- Only possible on master branch (old version)
             local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
-            parser_config.mips = {
+            parser_config.riscv = {
                 install_info = {
-                    -- url = 'https://github.com/omeyenburg/tree-sitter-mips',
-                    url = vim.fn.expand '$HOME/git/tree-sitter-mips',
+                    url = 'https://github.com/omeyenburg/tree-sitter-riscv',
                     branch = 'main',
                     files = { 'src/parser.c', 'src/scanner.c' },
                     generate_requires_npm = false,
                     requires_generate_from_grammar = false,
                 },
                 filetype = { 'asm', 'vmasm' },
+            }
+
+            vim.filetype.add {
+                pattern = {
+                    ['*.lp'] = 'clingo',
+                },
+                extension = {
+                    lp = 'clingo',
+                },
+            }
+
+            vim.api.nvim_create_autocmd('FileType', {
+                pattern = 'clingo',
+                callback = function()
+                    vim.opt_local.commentstring = '% %s'
+                    vim.opt_local.comments = ':%' -- optional but recommended
+                end,
+            })
+
+            parser_config.clingo = {
+                install_info = {
+                    url = 'https://github.com/potassco/tree-sitter-clingo',
+                    branch = 'main',
+                    files = { 'src/parser.c', 'src/scanner.c' },
+                    generate_requires_npm = false,
+                    requires_generate_from_grammar = false,
+                },
+                filetype = { 'clingo' },
             }
 
             require('nvim-treesitter').setup(opts)
