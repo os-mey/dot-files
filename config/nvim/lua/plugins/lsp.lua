@@ -42,6 +42,29 @@ return {
                     },
                 },
 
+                -- jdt-language-server
+                -- jdtls = {},
+
+                -- intelephense for php
+                -- https://github.com/bmewburn/intelephense-docs
+                intelephense = {
+                    settings = {
+                        intelephense = {
+                            stubs = {
+                                'Core',
+                                'standard',
+                                'date',
+                                'filter',
+                                'json',
+                                'pcre',
+                                'mysqli',
+                                'xml',
+                                'wordpress',
+                            },
+                        },
+                    },
+                },
+
                 -- cmake-language-server
                 -- https://github.com/regen100/cmake-language-server
                 cmake = {},
@@ -60,19 +83,19 @@ return {
 
                 -- glsl-analyzer
                 -- https://github.com/nolanderc/glsl_analyzer?tab=readme-ov-file#neovim
-                glslls = {},
+                -- glslls = {},
 
                 -- lua-language-server
                 -- https://luals.github.io/wiki/configuration/#neovim
                 lua_ls = {
-                    root_dir = function(fname)
-                        local nvim_config_realpath = vim.fn.resolve(vim.fn.stdpath 'config')
+                    -- root_dir = function(fname)
+                    --     local nvim_config_realpath = vim.fn.resolve(vim.fn.stdpath 'config')
 
-                        if fname:find(nvim_config_realpath, 1, true) == 1 then
-                            return nvim_config_realpath
-                        end
-                        return require('lspconfig.util').root_pattern('.luarc.json', '.luarc.jsonc', '.git')(fname)
-                    end,
+                    --     if fname:find(nvim_config_realpath, 1, true) == 1 then
+                    --         return nvim_config_realpath
+                    --     end
+                    --     return require('lspconfig.util').root_pattern('.luarc.json', '.luarc.jsonc', '.git')(fname)
+                    -- end,
                     settings = {
                         Lua = {
                             workspace = {
@@ -102,14 +125,16 @@ return {
                     settings = {
                         texlab = {
                             latexindent = {
-                                ["local"] = "/home/oskar/.config/latexindent/config.yaml",
+                                ['local'] = '/home/oskar/.config/latexindent/config.yaml',
                             },
                         },
                     },
                 },
 
                 -- typescript-language-server
-                ts_ls = {},
+                ts_ls = {
+                    filetypes = { 'typescript' },
+                },
 
                 -- rust-analyzer
                 -- https://rust-analyzer.github.io/book/configuration.html
@@ -157,17 +182,21 @@ return {
                 },
 
                 -- mips-language-server
-                mips_ls = {
+                mipsls = {
+                    cmd = { vim.fn.expand '~' .. '/git/mips-language-server/target/debug/mips-language-server' },
+                    -- root_dir = lspconfig.util.root_pattern '.git',
+                    filetypes = { 'asm' },
                     settings = {
                         Mips = {
-                            arch = 'mips32',
-                            disable_pseudo_instructions = false,
-                            linting = {
-                                enable = true,
-                                missing_label = true,
-                                unknown_instruction = true,
-                                unknown_directive = true,
-                            },
+                            isa = 'mips32',
+                            revision = 1,
+                            -- disable_pseudo_instructions = false,
+                            -- linting = {
+                            --     enable = true,
+                            --     missing_label = true,
+                            --     unknown_instruction = true,
+                            --     unknown_directive = true,
+                            -- },
                         },
                     },
                 },
@@ -224,32 +253,14 @@ return {
                 end,
             })
 
-            local lspconfig = require 'lspconfig'
-
-            local configs = require 'lspconfig.configs'
-            if not configs.mips_ls then
-                configs.mips_ls = {
-                    default_config = {
-                        cmd = { vim.fn.expand '~' .. '/git/mips-language-server/target/debug/mips-language-server' },
-                        root_dir = lspconfig.util.root_pattern '.git',
-                        filetypes = { 'asm' },
-                    },
-                }
-            end
-
             -- Configure language servers
             for server, config in pairs(opts.servers) do
-                if lspconfig[server] then
-                    local cmd = lspconfig[server].document_config.default_config.cmd
-
-                    if vim.fn.executable(cmd[1]) == 1 then
-                        config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
-                        lspconfig[server].setup(config)
-                    end
-                end
+                config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+                vim.lsp.config(server, config)
+                vim.lsp.enable(server)
             end
 
-            -- vim.lsp.set_log_level 'debug'
+            vim.lsp.set_log_level 'debug'
 
             -- Enable inlay hints, virtual text, etc.
             vim.lsp.inlay_hint.enable(true)
