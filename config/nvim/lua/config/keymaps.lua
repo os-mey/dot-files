@@ -9,6 +9,7 @@ local state = {
         cursorline = false,
         number = false,
         relativenumber = false,
+        signcolumn = "no",
         visual_bg = '',
         cursor_bg = '',
     },
@@ -75,9 +76,14 @@ local function toggle_preview_mode()
         state.preview.cursorline = vim.wo.cursorline
         state.preview.number = vim.wo.number
         state.preview.relativenumber = vim.wo.relativenumber
+        state.preview.signcolumn = vim.wo.signcolumn
         vim.wo.cursorline = false
         vim.wo.number = false
         vim.wo.relativenumber = false
+        vim.wo.signcolumn = "no"
+
+        vim.api.nvim_set_hl(0, 'Normal', { bg = 'NONE' })
+        vim.api.nvim_set_hl(0, 'NormalNC', { bg = 'NONE' })
 
         state.preview.visual_bg = vim.api.nvim_get_hl(0, { name = 'Visual' }).bg
         vim.api.nvim_set_hl(0, 'Visual', { fg = 'NONE' })
@@ -89,6 +95,7 @@ local function toggle_preview_mode()
         vim.wo.cursorline = state.preview.cursorline
         vim.wo.number = state.preview.number
         vim.wo.relativenumber = state.preview.relativenumber
+        vim.wo.signcolumn = state.preview.signcolumn
 
         vim.api.nvim_set_hl(0, 'Visual', { bg = state.preview.visual_bg })
 
@@ -197,7 +204,9 @@ keymap('v', 'K', ":m '<-2<CR>gv=gv", 'Shift selection up')
 keymap('n', '<leader>w', ':update<CR>', 'Write file')
 
 -- Start norm command
-keymap({ 'n', 'v' }, '<leader>n', ':norm ', 'Start norm command')
+vim.keymap.set({ 'n', 'v' }, '<leader>n', function()
+    vim.api.nvim_feedkeys(':norm ', 'n', false)
+end, { desc = 'Start norm command' })
 
 -- Paste and keep register
 keymap('x', '<leader>p', '"_dP', 'Paste and keep register')
