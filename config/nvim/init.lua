@@ -47,10 +47,10 @@ local opts = {
     },
 }
 
-require('lazy').setup('plugins', opts)
-
 require 'config.options'
 require 'config.keymaps'
 require 'config.autocmds'
+
+require('lazy').setup('plugins', opts)
 
 -- vim: softtabstop=4 shiftwidth=4 expandtab

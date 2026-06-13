@@ -108,28 +108,25 @@ return {
         },
     },
 
-    os.getenv 'COLORTERM' == 'truecolor'
-            and { -- Catppuccin colorscheme
-                'catppuccin/nvim',
-                name = 'catppuccin',
-                lazy = false,
-                priority = 1000,
-                event = 'VimEnter',
-                opts = {
-                    integrations = {
-                        blink_cmp = {
-                            enabled = true,
-                            style = 'bordered',
-                        },
-                    },
+    os.getenv 'COLORTERM' == 'truecolor' and { -- Catppuccin colorscheme
+        'catppuccin/nvim',
+        name = 'catppuccin',
+        lazy = false,
+        priority = 1000,
+        event = 'VimEnter',
+        opts = {
+            integrations = {
+                blink_cmp = {
+                    style = 'bordered',
                 },
-                init = function()
-                    vim.cmd.colorscheme 'catppuccin'
-                    vim.api.nvim_set_hl(0, 'Normal', { bg = '#1c1c2b' })
-                    vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#1c1c2b' })
-                end,
-            }
-        or vim.cmd.colorscheme 'industry',
+            },
+        },
+        init = function()
+            vim.cmd.colorscheme 'catppuccin-mocha'
+            vim.api.nvim_set_hl(0, 'Normal', { bg = '#1c1c2b' })
+            vim.api.nvim_set_hl(0, 'NormalNC', { bg = '#1c1c2b' })
+        end,
+    } or vim.cmd.colorscheme 'industry',
 
     { -- Statusbar
         'nvim-lualine/lualine.nvim',
@@ -139,7 +136,7 @@ return {
         opts = {
             options = {
                 icons_enabled = true, -- Requires a nerd font
-                theme = 'catppuccin', -- https://github.com/nvim-luaVline/lualine.nvim/blob/master/THEMES.md
+                theme = 'catppuccin-nvim',
                 globalstatus = true,
             },
             sections = {

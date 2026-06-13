@@ -42,6 +42,10 @@ return {
                     },
                 },
 
+                kotlin_language_server = {},
+
+                gopls = {},
+
                 -- jdt-language-server
                 -- jdtls = {},
 
@@ -187,9 +191,11 @@ return {
                     -- root_dir = lspconfig.util.root_pattern '.git',
                     filetypes = { 'asm' },
                     settings = {
-                        Mips = {
-                            isa = 'mips32',
-                            revision = 1,
+                        mipsls = {
+                            -- isa = 'mips32',
+                            -- revision = 1,
+                            dialect = 'Gas',
+                            version = 'Mips II',
                             -- disable_pseudo_instructions = false,
                             -- linting = {
                             --     enable = true,
@@ -260,7 +266,8 @@ return {
                 vim.lsp.enable(server)
             end
 
-            vim.lsp.set_log_level 'debug'
+            -- Enable debug loggin
+            -- vim.lsp.log.set_level 'debug'
 
             -- Enable inlay hints, virtual text, etc.
             vim.lsp.inlay_hint.enable(true)

@@ -86,7 +86,7 @@ return {
                 menu = {
                     auto_show = true,
                     border = 'rounded',
-                    -- draw = { treesitter = { 'lsp' } },
+                    draw = { treesitter = { 'lsp' } },
                 },
                 accept = { auto_brackets = { enabled = true } },
                 keyword = { range = 'prefix' },
@@ -135,7 +135,7 @@ return {
                 default = { 'lsp', 'path', 'snippets', 'buffer' },
                 providers = {
                     snippets = { min_keyword_length = 4 },
-                    lsp = { fallbacks = {} },
+                    -- lsp = { fallbacks = {} },
                 },
                 per_filetype = {
                     tex = { 'lsp', 'path', 'buffer' },
