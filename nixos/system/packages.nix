@@ -1,5 +1,6 @@
 {
   pkgs,
+  inputs,
   overlay-unstable,
   ...
 }: {
@@ -45,7 +46,29 @@
     vdpauinfo
     vim
     tree-sitter
+
     graalvmPackages.graalvm-ce
+    sshfs
+    vscode
+
+    # kotlin
+    # kotlin-language-server
+    # (pkgs.python312.withPackages (p: [
+    #   p.ipywidgets
+    #   p.jupyterlab
+    #   p.matplotlib
+    #   p.notebook
+    #   p.numpy
+    #   p.pandas
+    #   p.requests
+    #   p.scikit-learn
+    #   p.seaborn
+    # ]))
+
+    # Hytale
+    # blockbench
+    # inputs.hytale-launcher.packages.${pkgs.system}.default
+    # icu70 # required by hytale
 
     # Git
     git
@@ -87,5 +110,6 @@
     hyprpicker
     hyprshot
     hyprsunset
+    wl-clipboard
   ];
 }

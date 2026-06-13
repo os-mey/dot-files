@@ -109,7 +109,7 @@
 
     # Choose either wpa_supplicant or networkmanager for networking.
     # Enables wireless support via wpa_supplicant.
-    wireless.enable = false;
+    # wireless.enable = false;
 
     # Easiest to use and most distros use this by default.
     # Conflicts with wireless
@@ -123,10 +123,10 @@
     # proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
     # Open ports in the firewall.
-    # firewall.allowedTCPPorts = [ ... ];
-    # firewall.allowedUDPPorts = [ ... ];
+    # firewall.allowedTCPPorts = [ ];
+    # firewall.allowedUDPPorts = [ ];
     # Or disable the firewall altogether.
-    # firewall.enable = false;
+    firewall.enable = true;
   };
 
   # Select internationalisation properties.

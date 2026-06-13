@@ -3,46 +3,46 @@
     kdeconnect.enable = true;
 
     # Android debug bridge
-    adb.enable = true;
+    # adb.enable = true;
 
     # Firefox
-    firefox = {
-      enable = true;
-      package = pkgs.firefox;
-      policies = {
-        AppAutoUpdate = false;
-        AutofillAddressEnabled = false;
-        AutofillCreditCardEnabled = false;
-        DisableAppUpdate = true;
-        DisableCrashReporter = true;
-        DisableFeedbackCommands = true;
-        DisableFirefoxAccounts = true;
-        DisableFirefoxStudies = true;
-        DisablePasswordReveal = true;
-        DisablePocket = true;
-        DisableSetDesktopBackground = true;
-        DisableTelemetry = true;
-        DontCheckDefaultBrowser = true;
-        EnableTrackingProtection = true;
-        ExtensionUpdate = true;
-        HardwareAcceleration = true;
-        ManualAppUpdateOnly = true;
-        NetworkPrediction = false;
-        NoDefaultBookmarks = true;
-        OfferToSaveLogins = false;
-        PasswordManagerEnabled = false;
-        SearchSuggestEnabled = false;
-        SkipTermsOfUse = true;
-        TranslateEnabled = false;
-        DefaultSearchProvider = {
-          Name = "DuckDuckGo";
-          SearchURL = "https://www.duckduckgo.com/?q={searchTerms}";
-        };
-        SearchEngines = {
-          Default = "DuckDuckGo";
-        };
-      };
-    };
+    # firefox = {
+    #   enable = true;
+    #   package = pkgs.firefox;
+    #   policies = {
+    #     AppAutoUpdate = false;
+    #     AutofillAddressEnabled = false;
+    #     AutofillCreditCardEnabled = false;
+    #     DisableAppUpdate = true;
+    #     DisableCrashReporter = true;
+    #     DisableFeedbackCommands = true;
+    #     DisableFirefoxAccounts = true;
+    #     DisableFirefoxStudies = true;
+    #     DisablePasswordReveal = true;
+    #     DisablePocket = true;
+    #     DisableSetDesktopBackground = true;
+    #     DisableTelemetry = true;
+    #     DontCheckDefaultBrowser = true;
+    #     EnableTrackingProtection = true;
+    #     ExtensionUpdate = true;
+    #     HardwareAcceleration = true;
+    #     ManualAppUpdateOnly = true;
+    #     NetworkPrediction = false;
+    #     NoDefaultBookmarks = true;
+    #     OfferToSaveLogins = false;
+    #     PasswordManagerEnabled = false;
+    #     SearchSuggestEnabled = false;
+    #     SkipTermsOfUse = true;
+    #     TranslateEnabled = false;
+    #     DefaultSearchProvider = {
+    #       Name = "DuckDuckGo";
+    #       SearchURL = "https://www.duckduckgo.com/?q={searchTerms}";
+    #     };
+    #     SearchEngines = {
+    #       Default = "DuckDuckGo";
+    #     };
+    #   };
+    # };
 
     # Install gamemode wrapper for games.
     gamemode = {
@@ -60,11 +60,11 @@
     # xdg-desktop-portal-hyprland is automatically started with hyprland.
     hyprland.enable = true;
 
-    steam = {
-      enable = true;
-      remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-      dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    };
+    # steam = {
+    #   enable = true;
+    #   remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    #   dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    # };
 
     gnupg.agent = {
       enable = true;
@@ -73,9 +73,9 @@
       # enableBrowserSocket = false; # Set to true if using GPG in the browser (e.g., for web-based password managers).
       pinentryPackage = pkgs.pinentry-curses; # Non-GUI-prompt
       settings = {
-        # Passphrase stays cached for 20 minutes after use up to 4 hours.
+        # Passphrase stays cached for 60 minutes after use up to 5 hours.
         default-cache-ttl = 3600;
-        max-cache-ttl = 7200;
+        max-cache-ttl = 18000;
       };
     };
 

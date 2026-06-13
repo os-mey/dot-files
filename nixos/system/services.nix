@@ -1,10 +1,28 @@
 {pkgs, ...}: {
+  # services.slurm = {
+  #   server.enable = true;
+  #   client.enable = true;
+  #   controlMachine = "oskar-nixos";
+  #   nodeName = [ "oskar-nixos CPUs=4 State=UNKNOWN" ];
+  #   partitionName = [ "default Nodes=oskar-nixos Default=YES MaxTime=INFINITE State=UP" ];
+  #   extraConfig = ''
+  #     MailProg=/run/current-system/sw/bin/true
+  #   '';
+  # };
+
+  # services.munge = {
+  #   enable = true;
+  #   password = "/etc/munge/munge.key";
+  # };
+
   virtualisation = {
     # Enable docker
-    docker.enable = true;
+    # docker.enable = true;
 
-    # Enable waydroid
-    waydroid.enable = true;
+    # waydroid.enable = true;
+  };
+  systemd.services.waydroid-container = {
+    path = with pkgs; [wl-clipboard xclip];
   };
 
   # Disable waiting for Network Manager at boot.
@@ -35,6 +53,8 @@
       drivers = [
         pkgs.gutenprint
         pkgs.brlaser
+        pkgs.epson-escpr
+        pkgs.epson-escpr2
       ];
     };
 

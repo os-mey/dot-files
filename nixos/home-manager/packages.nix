@@ -1,25 +1,30 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     # Apps
-    anki
-    gimp3
-    kitty
-    libreoffice-qt
-    spotify
-    ungoogled-chromium
-    prismlauncher
-
+    # spotify
+    # prismlauncher
     # discord
+
     # inkscape
     # logisim
     # logisim-evolution
     # mars-mips
 
+    # jetbrains.idea
+    # jetbrains.idea-oss
+
     # Yubikey
-    yubikey-manager
-    yubioath-flutter
-    yubikey-personalization
-    pinentry-curses
+    # yubikey-manager
+    # yubioath-flutter
+    # yubikey-personalization
+    # pinentry-curses
+
+    anki
+    gimp3
+    kitty
+    libreoffice-qt
+    discord
+    ungoogled-chromium
 
     # Tools
     bat
@@ -37,7 +42,6 @@
     ripgrep-all
     tmux
     unzip
-    wl-clipboard
 
     # Notes
     unison
@@ -55,14 +59,12 @@
     zathura
 
     # Language-specific tools
+    # go
     gcc
     gdb
     lldb
     nodejs
     rustup
-    (pkgs.python312.withPackages (p: [
-      p.numpy
-    ]))
 
     # Desktop tools
     mako

@@ -7,6 +7,7 @@
     withNodeJs = false;
     withPython3 = false;
     withRuby = false;
+    sideloadInitLua = true;
     extraPackages = with pkgs; [
       # Language Servers
       awk-language-server
@@ -21,6 +22,8 @@
       typescript-language-server
       vscode-langservers-extracted
       jdt-language-server
+      gopls
+      intelephense
 
       # Linters
       python312Packages.flake8
@@ -30,11 +33,12 @@
       black
       indent
       jq
-      nodePackages.prettier
+      prettier
       rustfmt
       shfmt
       stylua
       taplo
+      php84Packages.php-cs-fixer
 
       # Tools
       clang-tools # Provides clangd, clang-format & clang-tidy
