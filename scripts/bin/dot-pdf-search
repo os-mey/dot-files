@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 tmpfile=/tmp/pdfsearch
-directories="$HOME/books/ $HOME/Downloads/ $HOME/git/university/"
+directories="$HOME/books/ $HOME/lectures/ $HOME/Downloads/ $HOME/git/university/"
 
 # Search mode: "name" or "content"
 mode=${1:-"name"}
