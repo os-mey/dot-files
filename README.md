@@ -1,6 +1,6 @@
 # dotfiles
 
-My personal dotfiles.
+My personal configuration.
 
 <table>
   <tr>
