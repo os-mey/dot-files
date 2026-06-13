@@ -94,7 +94,8 @@
         "format-icons": {
             "activated": "",
             "deactivated": ""
-        }
+        },
+        "start-activated": true
     },
     "bluetooth": {
         // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
@@ -112,11 +113,11 @@
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{signalStrength}% 󰖩 ",
+        "format-wifi": "󰖩 ",
         "format-ethernet": "{ipaddr}/{cidr} 󰈁 ",
         "format-linked": "{ifname} (No IP) 󰌹 ",
         "format-disconnected": "N/A 󱚵 ",
-        "tooltip-format": "{ifname} via {gwaddr} ({essid})",
+        "tooltip-format": "{ifname} via {gwaddr} {signalStrength}% ({essid})",
         "on-click": "pkill nmtui || kitty -o confirm_os_window_close=0 nmtui"
     },
     "cpu": {

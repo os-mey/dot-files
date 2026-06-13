@@ -69,10 +69,6 @@ tooltip label {
     opacity: 0.5;
 }
 
-#workspaces button:hover {
-    color: @textok;
-}
-
 #workspaces button.active {
     /*padding: 1px 10px;*/
     min-width: 15px;

@@ -1,0 +1,10 @@
+default partial alphanumeric_keys
+
+xkb_symbols "basic" {
+    include "de(mac_nodeadkeys)"
+    name[Group1] = "xkb layout for hyprland on mac";
+
+    key <ESC>  { [ Tab ] };
+    key <TAB>  { [ BackSpace ] };
+    key <CAPS> { [ Escape ] };
+};
