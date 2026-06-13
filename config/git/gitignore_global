@@ -1,6 +1,8 @@
 # Global gitignore file
 # git config --global core.excludesfile ~/.config/git/gitignore_global
 
+nocommit/
+
 # MacOS system files
 .DS_Store
 
@@ -8,7 +10,6 @@
 build/
 
 # Binaries
-lib/
 lib64
 
 # VSCode configuration files
