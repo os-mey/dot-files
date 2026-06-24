@@ -153,6 +153,8 @@ keymap('n', '+', ':@:<CR>', 'Repeat last command')
 
 --- Navigation ---
 
+keymap('n', '<C-i>', '<C-S-i>', 'Next position in cursor history')
+
 -- Centered half page scrolling
 keymap('n', '<C-d>', '<C-d>zz', 'Scroll down')
 keymap('n', '<C-u>', '<C-u>zz', 'Scroll up')

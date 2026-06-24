@@ -38,8 +38,10 @@ return {
         },
         indent = { -- Draws indent lines
             enabled = true,
-            scope = { enabled = false }, -- highlights current scope
+            scope = { -- highlights current scope
+                enabled = false,
+            },
         },
-        quickfile = { enabled = true }, -- Quicky load files
+        quickfile = { enabled = true }, -- Quickly load files
     },
 }

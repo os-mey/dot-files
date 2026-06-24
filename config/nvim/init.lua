@@ -1,10 +1,3 @@
---  _   _       _
--- | \ | |_   _(_)_ __ ___
--- |  \| \ \ / / | '_ ` _ \
--- | |\  |\ V /| | | | | | |
--- |_| \_| \_/ |_|_| |_| |_|
---
-
 -- Must run at beginning
 vim.opt.runtimepath:prepend(debug.getinfo(1, 'S').source:sub(2):match '(.*/)')
 vim.g.mapleader = ' '

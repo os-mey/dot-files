@@ -33,8 +33,14 @@ for key, level in pairs(fold_keys) do
     vim.keymap.set('n', key, ':set foldlevel=' .. level .. '<cr>')
 end
 
--- Treesitter Context
 return {
+    {
+        'romus204/tree-sitter-manager.nvim',
+        lazy = true,
+        event = 'VeryLazy',
+        opts = {},
+    },
+
     {
         'nvim-treesitter/nvim-treesitter-context',
         opts = {
