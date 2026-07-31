@@ -47,8 +47,6 @@ hl.on('hyprland.start', function()
     hl.exec_cmd '[workspace special:mails silent] thunderbird'
 end)
 
--- Note: Shutdown hooks in lua require catching process exit or running wrappers.
--- We hook the quit signal to clean up:
 hl.on('hyprland.shutdown', function()
     hl.exec_cmd 'pkill waybar; pkill mako'
 end)
@@ -56,19 +54,27 @@ end)
 ----------------
 --- MONITORS ---
 ----------------
-hl.monitor { output = 'eDP-1', mode = 'preferred', position = '0x0', scale = '1.6' }
-hl.monitor { output = 'HDMI-A-2', mode = 'preferred', position = '-750x-1440', scale = '1' }
+hl.monitor {
+    output = 'eDP-1',
+    mode = 'preferred',
+    position = '0x0',
+    scale = '1.6',
+}
+hl.monitor {
+    output = 'HDMI-A-2',
+    mode = 'preferred',
+    position = '-750x-1440',
+    scale = '1',
+    -- mirror = 'eDP-1',
+}
 
 -----------------------
---- WORKSPACE RULES ---
+--- RULES ---
 -----------------------
+
 hl.workspace_rule { workspace = 's[true]', gaps_in = 0, gaps_out = 0 }
--- hl.window_rule({ match = { workspace = "s[true]" }, border_size = 0, rounding = 0 })
+hl.window_rule({ match = { workspace = "s[true]" }, border_size = 0, rounding = 0 })
 
---------------------
---- WINDOW RULES ---
---------------------
-hl.window_rule { match = { title = '^(WhatsApp Web)$' }, workspace = 'special:whatsapp' }
 hl.window_rule { match = { class = '^(thunderbird)$' }, workspace = 'special:mails' }
 
 hl.window_rule { match = { class = '.*' }, idle_inhibit = 'fullscreen' }
@@ -92,15 +98,14 @@ hl.window_rule {
     no_focus = true,
     rounding = 8,
     opacity = 0.9,
-    move = '50% 80%',
+    move = '(monitor_w*0.5) (monitor_h*0.8)',
     size = '0 0',
 }
 hl.window_rule { match = { class = 'negative:^(yad)$', float = true }, border_size = 1 }
 
-hl.window_rule { match = { class = '^(pdfsearch)$' }, float = true, size = '80% 70%', move = '10% 15%', opacity = 0.95 }
+hl.window_rule { match = { class = '^(pdfsearch)$' }, float = true, size = '(monitor_w*0.8) (monitor_h*0.7)', opacity = 0.95 }
 hl.window_rule { match = { class = '^$', title = '^$', xwayland = true, float = true, fullscreen = false, pin = false }, no_focus = true }
 
--- -- Layer rules
 hl.layer_rule { match = { namespace = 'wofi' }, dim_around = true }
 hl.layer_rule { match = { namespace = 'hyprpicker' }, animation = 'fade' }
 hl.layer_rule { match = { namespace = 'selection' }, animation = 'fade' }
@@ -119,15 +124,12 @@ hl.config {
             inactive_border = 'rgb(585b70)',
         },
         resize_on_border = false,
-        allow_tearing = false,
-        layout = 'dwindle',
         no_focus_fallback = true,
-        snap = { enabled = false },
     },
     decoration = {
         rounding = 0,
-        active_opacity = 1,
-        inactive_opacity = 1,
+        active_opacity = 1.0,
+        inactive_opacity = 1.0,
         dim_inactive = false,
         dim_strength = 0.4,
         dim_around = 0.2,
@@ -178,6 +180,10 @@ hl.config {
     },
     dwindle = {
         preserve_split = true,
+    },
+    ecosystem = {
+        no_update_news = true,
+        no_donation_nag = true,
     },
 }
 
@@ -236,7 +242,7 @@ hl.bind(
     hl.dsp.exec_cmd [[wl-paste | python -c 'import sys; x = sys.stdin.read(); [sys.stdout.write(x.replace("**", "").replace("$$", "\(", 1).replace("$$", "\)", 1).replace("$", "\(", 1).replace("$", "\)", 1)) for _ in iter(int, 1) if "$" in x]' | wl-copy]]
 )
 hl.bind(mainMod .. ' + ESCAPE', hl.dsp.exec_cmd(logout))
-hl.bind(mainMod .. ' + SHIFT + M', hl.dsp.exec_cmd 'hyprctl dispatch exit', { locked = true })
+hl.bind(mainMod .. ' + SHIFT + M', hl.dsp.exit(), { locked = true })
 hl.bind(mainMod .. ' + SHIFT + X', hl.dsp.exec_cmd('hyprctl switchxkblayout ' .. keyboard .. ' next'))
 
 -- Window Control
@@ -259,26 +265,23 @@ hl.bind(mainMod .. ' + SHIFT + Z', hl.dsp.exec_cmd(pdfsearchcontent))
 -- Toggles
 hl.bind(mainMod .. ' + B', hl.dsp.exec_cmd(toggleblueman))
 hl.bind(mainMod .. ' + SHIFT + B', hl.dsp.exec_cmd(togglebluetooth))
-hl.bind(
-    mainMod .. ' + SHIFT + F',
-    hl.dsp.exec_cmd 'hyprctl keyword decoration:dim_inactive $(hyprctl getoption decoration:dim_inactive | awk \'NR==1{print ($2 == "1" ? "false" : "true")}\')'
-)
 
 -- Terminal & Browser
 hl.bind(mainMod .. ' + Q', hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. ' + SHIFT + Q', hl.dsp.exec_cmd('[float; size 60% 30%] ' .. terminal))
 hl.bind(mainMod .. ' + E', function()
-    -- 1. Use Lua's io.popen to run the command and capture the output
     local handle = io.popen('pidof ' .. browser)
+    if handle == nil then
+        return
+    end
+
     local pid = handle:read '*a'
     handle:close()
 
-    -- 2. Check if the output contains any actual characters (meaning a PID was found)
     if pid:match '%S' then
-        hl.dsp.focus { window = browser }
-        hl.dsp.exec_cmd(browser)
+        hl.dispatch(hl.dsp.focus { window = 'class:' .. browser })
     else
-        hl.dsp.exec_cmd(browser)
+        hl.dispatch(hl.dsp.exec_cmd(browser))
     end
 end)
 hl.bind(mainMod .. ' + SHIFT + E', hl.dsp.exec_cmd(browser .. ' --private-window'))
@@ -308,26 +311,38 @@ hl.bind(mainMod .. ' + SHIFT + K', hl.dsp.window.swap { direction = 'up' })
 hl.bind(mainMod .. ' + SHIFT + L', hl.dsp.window.swap { direction = 'right' })
 
 -- Switch Workspaces
--- TODO: consider closing specials
-for i = 1, 9 do
-    hl.bind(mainMod .. ' + ' .. i, hl.dsp.focus { workspace = i })
-    hl.bind(mainMod .. ' + SHIFT + ' .. i, hl.dsp.window.move { workspace = i })
+local function focus(i)
+    return function()
+        local activeSpecial = hl.get_active_special_workspace()
+        if activeSpecial ~= nil then
+            hl.dispatch(hl.dsp.workspace.toggle_special(activeSpecial.name:sub(9)))
+        end
+        hl.dispatch(hl.dsp.focus { workspace = i })
+    end
 end
-hl.bind(mainMod .. ' + 0', hl.dsp.focus { workspace = 10 })
-hl.bind(mainMod .. ' + SHIFT + 0', hl.dsp.window.move { workspace = 10 })
+local function move(i)
+    return function()
+        local activeSpecial = hl.get_active_special_workspace()
+        if activeSpecial ~= nil then
+            hl.dispatch(hl.dsp.workspace.toggle_special(activeSpecial.name:sub(9)))
+        end
+        hl.dispatch(hl.dsp.window.move { workspace = i })
+    end
+end
 
-hl.bind(mainMod .. ' + TAB', hl.dsp.focus { workspace = 'e+1' }, { repeating = true })
-hl.bind(mainMod .. ' + SHIFT + TAB', hl.dsp.focus { workspace = 'e-1' }, { repeating = true })
+hl.bind(mainMod .. ' + 0', focus(10))
+hl.bind(mainMod .. ' + SHIFT + 0', move(10))
+for i = 1, 9 do
+    hl.bind(mainMod .. ' + ' .. i, focus(i))
+    hl.bind(mainMod .. ' + SHIFT + ' .. i, move(i))
+end
+
+hl.bind(mainMod .. ' + TAB', focus 'r+1', { repeating = true })
+hl.bind(mainMod .. ' + SHIFT + TAB', focus 'r-1', { repeating = true })
 
 -- Mouse binds
 hl.bind(mainMod .. ' + mouse:272', hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. ' + mouse:273', hl.dsp.window.resize(), { mouse = true })
-
--- Resize Active
-hl.bind(mainMod .. ' + CTRL + H', hl.dsp.exec_cmd 'hyprctl dispatch resizeactive -50 0', { repeating = true })
-hl.bind(mainMod .. ' + CTRL + J', hl.dsp.exec_cmd 'hyprctl dispatch resizeactive 0 50', { repeating = true })
-hl.bind(mainMod .. ' + CTRL + K', hl.dsp.exec_cmd 'hyprctl dispatch resizeactive 0 -50', { repeating = true })
-hl.bind(mainMod .. ' + CTRL + L', hl.dsp.exec_cmd 'hyprctl dispatch resizeactive 50 0', { repeating = true })
 
 -- Media Keys
 hl.bind('XF86AudioRaiseVolume', hl.dsp.exec_cmd(media .. ' volume up'), { locked = true, repeating = true })
@@ -347,7 +362,6 @@ hl.bind('XF86AudioPrev', hl.dsp.exec_cmd 'playerctl previous', { locked = true }
 -- Special Workspaces
 hl.bind(mainMod .. ' + G', hl.dsp.workspace.toggle_special 'magic')
 hl.bind(mainMod .. ' + SHIFT + G', hl.dsp.window.move { workspace = 'special:magic' })
-hl.bind(mainMod .. ' + W', hl.dsp.workspace.toggle_special 'whatsapp')
 hl.bind(mainMod .. ' + M', hl.dsp.workspace.toggle_special 'mails')
 
 -- Lid Switch
