@@ -13,8 +13,6 @@
     users.oskar = {
       imports = [
         ./programs
-        ./packages.nix
-        ./services.nix
         ./theme.nix
         ./mime.nix
       ];

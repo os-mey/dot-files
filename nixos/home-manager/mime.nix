@@ -53,6 +53,7 @@
       "application/xml" = "nvim.desktop";
       "application/yaml" = "nvim.desktop";
       "application/json-patch+json" = "nvim.desktop";
+      "application/x-pem-file" = "nvim.desktop";
 
       "text/cache-manifest" = "nvim.desktop";
       "text/calendar" = "nvim.desktop";

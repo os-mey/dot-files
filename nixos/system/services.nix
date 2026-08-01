@@ -19,7 +19,10 @@
     # Enable docker
     # docker.enable = true;
 
-    # waydroid.enable = true;
+    waydroid = {
+      enable = true;
+      package = pkgs.waydroid-nftables;
+    };
   };
   systemd.services.waydroid-container = {
     path = with pkgs; [wl-clipboard xclip];

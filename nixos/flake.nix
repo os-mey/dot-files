@@ -13,7 +13,6 @@
       inputs.home-manager.follows = "home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    hytale-launcher.url = "github:TNAZEP/HytaleLauncherFlake";
   };
 
   outputs = inputs: let
@@ -24,7 +23,10 @@
       specialArgs = {
         inherit inputs;
         overlay-unstable = final: prev: {
-          unstable = inputs.nixpkgs-unstable.legacyPackages.${prev.system};
+          unstable = import inputs.nixpkgs-unstable {
+            system = prev.stdenv.hostPlatform.system;
+            config.allowUnfree = true;
+          };
         };
       };
       modules = [

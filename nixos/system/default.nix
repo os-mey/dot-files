@@ -60,10 +60,11 @@
 
   boot = {
     # Select Linux kernel.
+    kernelPackages = pkgs.linuxPackages;
     # kernelPackages = pkgs.linuxPackages_latest;
     # kernelPackages = pkgs.linuxPackages_hardended;
     # kernelPackages = pkgs.linuxPackages_zen;
-    kernelPackages = pkgs.linuxPackages_xanmod;
+    # kernelPackages = pkgs.linuxPackages_xanmod;
 
     kernelModules = [
       "binder_linux"

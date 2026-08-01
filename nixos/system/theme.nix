@@ -9,6 +9,7 @@
 
   # Enable catppuccin globally.
   catppuccin.enable = true;
+  catppuccin.autoEnable = true;
 
   environment.sessionVariables = {
     # QT
@@ -57,7 +58,6 @@
     fontconfig = {
       defaultFonts = {
         monospace = ["JetBrainsMono Nerd Font"];
-        # monospace = ["UbuntuMono Nerd Font"];
         sansSerif = ["DejaVu Sans"];
         serif = ["DejaVu Serif"];
       };
